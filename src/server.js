@@ -1,6 +1,6 @@
 import { App } from "./App";
 
-const port = process.env.APP_PORT || 4000;
+const port = process.env.PORT || 4000;
 const isDevelopment = "production" !== process.env.NODE_ENV;
 const opts = { isDevelopment, port };
 const app = App(opts);
