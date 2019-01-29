@@ -1,6 +1,5 @@
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import { makeExecutableSchema } from "graphql-tools";
+import { ApolloServer, makeExecutableSchema } from "apollo-server-express";
 
 import { typeDefs } from "./schema";
 import { Query } from "./resolvers/query";

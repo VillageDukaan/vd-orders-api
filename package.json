@@ -22,9 +22,7 @@
   },
   "dependencies": {
     "apollo-server-express": "^2.3.3",
-    "express": "^4.16.4",
-    "graphql": "^14.1.1",
-    "graphql-tools": "^4.0.4"
+    "express": "^4.16.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
