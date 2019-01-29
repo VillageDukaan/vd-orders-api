@@ -1,4 +1,4 @@
-import { App } from "./src/App";
+import { App } from "./App";
 
 const port = process.env.APP_PORT || 4000;
 const isDevelopment = "production" !== process.env.NODE_ENV;
