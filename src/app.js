@@ -25,7 +25,8 @@ export const App = opts => {
   const server = new ApolloServer({
     schema,
     path: config.graphQl.path,
-    playground: isDevelopment
+    playground: isDevelopment,
+    context: () => ({ config, database })
   });
   server.applyMiddleware({ app, cors: isDevelopment });
 
