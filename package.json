@@ -28,7 +28,8 @@
     "firebase-admin": "^6.5.1",
     "graphql": "^14.1.1",
     "lodash": "^4.17.11",
-    "newrelic": "^5.2.1"
+    "newrelic": "^5.2.1",
+    "pg": "^7.8.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

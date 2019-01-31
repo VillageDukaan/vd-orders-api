@@ -9,11 +9,13 @@ import { checkAuth, login, signup } from "./helpers/auth";
 
 const schema = makeExecutableSchema({ typeDefs, resolvers: { Query } });
 
-export const App = config => {
+export const App = opts => {
+  const { config, database } = opts;
   const { isDevelopment } = config;
   const app = express();
 
   app.locals.config = config;
+  app.locals.database = database;
   app.locals.firebase = firebase.initializeApp(config.firebase);
   app.locals.firebaseAdmin = firebaseAdmin.initializeApp(config.firebase);
 
