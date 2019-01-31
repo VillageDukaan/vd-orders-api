@@ -15,7 +15,6 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
     "precommit": "npm run lint",
-    "prepush": "npm run test",
     "test": "jest",
     "postinstall": "yarn build",
     "unused-deps": "yarn yarn-check -p"
