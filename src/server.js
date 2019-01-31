@@ -1,11 +1,10 @@
+import config from "config";
+
 import { App } from "./app";
 
-const port = process.env.PORT || 4000;
-const isDevelopment = "production" !== process.env.NODE_ENV;
-const opts = { isDevelopment, port };
-const app = App(opts);
+const app = App(config);
 
-app.listen(opts.port, () => {
+app.listen(config.port, () => {
   /* eslint-disable */
-  console.log(`Server: http://localhost:${opts.port}`);
+  console.log(`Server: http://localhost:${config.port}`);
 });

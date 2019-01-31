@@ -5,23 +5,24 @@ import firebaseAdmin from "firebase-admin";
 
 import { typeDefs } from "./schema";
 import { Query } from "./resolvers/query";
-import { config } from "./config/firebase";
 import { checkAuth, login, signup } from "./helpers/auth";
 
 const schema = makeExecutableSchema({ typeDefs, resolvers: { Query } });
 
-export const App = ({ graphQlEndpoint = "/graphql", isDevelopment = true }) => {
+export const App = config => {
+  const { isDevelopment } = config;
   const app = express();
 
-  app.locals.firebase = firebase.initializeApp(config);
-  app.locals.firebaseAdmin = firebaseAdmin.initializeApp(config);
+  app.locals.config = config;
+  app.locals.firebase = firebase.initializeApp(config.firebase);
+  app.locals.firebaseAdmin = firebaseAdmin.initializeApp(config.firebase);
 
   app.use(express.json());
   app.use(/\/((?!login|signup).)*/, checkAuth);
 
   const server = new ApolloServer({
     schema,
-    path: graphQlEndpoint,
+    path: config.graphQl.path,
     playground: isDevelopment
   });
   server.applyMiddleware({ app, cors: isDevelopment });

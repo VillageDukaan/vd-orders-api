@@ -1,0 +1,7 @@
+{
+  "isDevelopment": true,
+  "port": 4000,
+  "graphQl": {
+    "path": "/graphql"
+  }
+}
