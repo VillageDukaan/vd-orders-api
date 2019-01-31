@@ -9,7 +9,7 @@
   "author": "Roger Rajaratnam <roger@sourcier.uk>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec babel-node ./src/server.js",
+    "start": "nodemon --exitcrash --exec babel-node ./src/server.js",
     "start:prod": "node -r appoptics-apm -r newrelic ./dist/server.js",
     "build": "babel src -d dist",
     "lint": "eslint ./src",
@@ -24,7 +24,10 @@
     "apollo-server-express": "^2.3.3",
     "appoptics-apm": "^5.9.5",
     "express": "^4.16.4",
+    "firebase": "^5.8.1",
+    "firebase-admin": "^6.5.1",
     "graphql": "^14.1.1",
+    "lodash": "^4.17.11",
     "newrelic": "^5.2.1"
   },
   "devDependencies": {
