@@ -1,15 +1,9 @@
-import firebase from "firebase";
-import firebaseAdmin from "firebase-admin";
 import { isEmpty } from "lodash";
-
-import { config } from "../config/firebase";
-
-firebase.initializeApp(config);
-firebaseAdmin.initializeApp(config);
 
 export const checkAuth = async (req, res, next) => {
   try {
     const authorization = req.headers.authorization;
+    const { firebaseAdmin } = req.app.locals;
     if (isEmpty(authorization)) res.sendStatus(401);
 
     const token = authorization.replace("Bearer ", "");
@@ -23,6 +17,7 @@ export const checkAuth = async (req, res, next) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const { firebase } = req.app.locals;
     await firebase.auth().signInWithEmailAndPassword(email, password);
     const token = await firebase.auth().currentUser.getIdToken(true);
     res.json({ access_token: token });
@@ -34,6 +29,7 @@ export const login = async (req, res) => {
 export const signup = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const { firebase } = req.app.locals;
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     res.sendStatus(200);
   } catch (error) {
