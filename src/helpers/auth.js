@@ -8,22 +8,21 @@ firebase.initializeApp(config);
 firebaseAdmin.initializeApp(config);
 
 export const checkAuth = async (req, res, next) => {
-  const authorization = req.headers.authorization;
-
-  if (isEmpty(authorization)) res.sendStatus(401);
-
   try {
+    const authorization = req.headers.authorization;
+    if (isEmpty(authorization)) res.sendStatus(401);
+
     const token = authorization.replace("Bearer ", "");
-    const isValid = await firebaseAdmin.auth().verifyIdToken(token);
-    if (!isEmpty(isValid)) next();
+    await firebaseAdmin.auth().verifyIdToken(token);
+    next();
   } catch (error) {
     res.sendStatus(401);
   }
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     await firebase.auth().signInWithEmailAndPassword(email, password);
     const token = await firebase.auth().currentUser.getIdToken(true);
     res.json({ access_token: token });
@@ -33,8 +32,8 @@ export const login = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { email, password } = req.body;
   try {
+    const { email, password } = req.body;
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     res.sendStatus(200);
   } catch (error) {
