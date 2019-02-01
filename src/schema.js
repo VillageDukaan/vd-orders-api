@@ -8,5 +8,9 @@ export const typeDefs = `
     id: Int
     status: String,
     paymentId: String
+    deliveryAddress: String
+    billingAddress: String
+    createdAt: String
+    updatedAt: String
   }
 `;
