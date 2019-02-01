@@ -18,8 +18,5 @@
   },
   "sentry": {
     "dsn": "SENTRY_DSN"
-  },
-  "rollbar": {
-    "accessToken": "ROLLBAR_ACCESS_TOKEN"
   }
 }

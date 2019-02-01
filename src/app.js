@@ -22,7 +22,6 @@ export const App = opts => {
 
   app.locals.config = config;
   app.locals.database = database;
-  // app.locals.rollbar = rollbar;
   app.locals.logger = logger;
   app.locals.firebase = firebase.initializeApp(config.firebase);
   app.locals.firebaseAdmin = firebaseAdmin.initializeApp({
