@@ -15,14 +15,13 @@ import { login, signup, getToken } from "./helpers/auth";
 const schema = makeExecutableSchema({ typeDefs, resolvers: { Query } });
 
 export const App = opts => {
-  const { config, database, rollbar, airBrake } = opts;
+  const { config, database, rollbar } = opts;
   const { isDevelopment } = config;
   const app = express();
 
   app.locals.config = config;
   app.locals.database = database;
   app.locals.rollbar = rollbar;
-  app.locals.airBrake = airBrake;
   app.locals.firebase = firebase.initializeApp(config.firebase);
   app.locals.firebaseAdmin = firebaseAdmin.initializeApp({
     credential: firebaseAdmin.credential.cert({
