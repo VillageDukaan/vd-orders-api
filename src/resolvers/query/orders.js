@@ -1,5 +1,3 @@
-// import * as Sentry from "@sentry/node";
-
 export const getOrders = async (parent, args, context) => {
   try {
     const { database } = context;
@@ -20,7 +18,5 @@ export const getOrders = async (parent, args, context) => {
   } catch (error) {
     const { logger } = context;
     logger.error(error);
-    // Sentry.captureException(error);
-    // rollbar.error(error);
   }
 };

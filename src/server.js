@@ -1,6 +1,6 @@
 import config from "config";
 import { Pool } from "pg";
-// import * as Sentry from "@sentry/node";
+import * as Sentry from "@sentry/node";
 // import Rollbar from "rollbar";
 
 import { logger } from "./helpers/logger";
@@ -12,10 +12,10 @@ import { logger } from "./helpers/logger";
 //   environment: process.env.NODE_ENV
 // });
 
-// Sentry.init({
-//   dsn: config.sentry.dsn,
-//   environment: process.env.NODE_ENV
-// });
+Sentry.init({
+  dsn: config.sentry.dsn,
+  environment: process.env.NODE_ENV
+});
 
 import { App } from "./app";
 
