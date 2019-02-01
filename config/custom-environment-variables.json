@@ -18,5 +18,8 @@
   },
   "sentry": {
     "dsn": "SENTRY_DNS"
+  },
+  "rollbar": {
+    "accessToken": "ROLLBAR_ACCESS_TOKEN"
   }
 }
