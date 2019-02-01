@@ -1,4 +1,4 @@
-import * as Sentry from "@sentry/node";
+// import * as Sentry from "@sentry/node";
 
 export const getOrders = async (parent, args, context) => {
   try {
@@ -18,9 +18,9 @@ export const getOrders = async (parent, args, context) => {
       updatedAt: order.updatedAt
     }));
   } catch (error) {
-    const { rollbar, logger } = context;
+    const { logger } = context;
     logger.error(error);
-    Sentry.captureException(error);
-    rollbar.error(error);
+    // Sentry.captureException(error);
+    // rollbar.error(error);
   }
 };
