@@ -7,6 +7,7 @@ import {
 import firebase from "firebase";
 import firebaseAdmin from "firebase-admin";
 import { isNil } from "lodash";
+import morgan from "morgan";
 
 import { typeDefs } from "./schema";
 import { Query } from "./resolvers/query";
@@ -31,6 +32,7 @@ export const App = opts => {
     })
   });
 
+  app.use(morgan("combined"));
   app.use(express.json());
 
   const server = new ApolloServer({
