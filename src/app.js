@@ -38,7 +38,7 @@ export const App = opts => {
   const server = new ApolloServer({
     schema,
     path: config.graphQl.path,
-    playground: isDevelopment,
+    playground: false,
     context: async ({ req }) => {
       const token = await getToken(req);
       if (isNil(token)) throw new AuthenticationError("You must be logged in");
