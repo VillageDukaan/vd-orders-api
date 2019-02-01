@@ -21,5 +21,9 @@
   },
   "rollbar": {
     "accessToken": "ROLLBAR_ACCESS_TOKEN"
+  },
+  "airBrake": {
+    "projectId": "AIRBRAKE_PROJECT_ID",
+    "projectKey": "AIRBRAKE_API_KEY"
   }
 }
