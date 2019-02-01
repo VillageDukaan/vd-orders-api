@@ -3,6 +3,8 @@ import { Pool } from "pg";
 import * as Sentry from "@sentry/node";
 import Rollbar from "rollbar";
 
+import { logger } from "./helpers/logger";
+
 var rollbar = new Rollbar({
   accessToken: config.rollbar.accessToken,
   captureUncaught: true,
@@ -21,9 +23,8 @@ const database = new Pool({
   connectionString: config.postgresql.url
 });
 
-const app = App({ config, database, rollbar });
+const app = App({ config, database, rollbar, logger });
 
 app.listen(config.port, () => {
-  /* eslint-disable */
-  console.log(`Server: http://localhost:${config.port}`);
+  logger.log(`Server: http://localhost:${config.port}`);
 });

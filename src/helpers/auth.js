@@ -10,6 +10,8 @@ export const checkAuth = async (req, res, next) => {
     await firebase.auth().signInWithCustomToken(token);
     next();
   } catch (error) {
+    const { logger } = req.app.locals;
+    logger.error(error);
     res.sendStatus(401);
   }
 };
@@ -21,6 +23,8 @@ export const getToken = async req => {
     const token = authorization.replace("Bearer ", "");
     return await firebase.auth().signInWithCustomToken(token);
   } catch (error) {
+    const { logger } = req.app.locals;
+    logger.error(error);
     return null;
   }
 };
@@ -35,6 +39,8 @@ export const login = async (req, res) => {
     const token = await firebaseAdmin.auth().createCustomToken(user.uid);
     res.json({ access_token: token });
   } catch (error) {
+    const { logger } = req.app.locals;
+    logger.error(error);
     res.sendStatus(400);
   }
 };
@@ -46,6 +52,8 @@ export const signup = async (req, res) => {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     res.sendStatus(200);
   } catch (error) {
+    const { logger } = req.app.locals;
+    logger.error(error);
     res.sendStatus(400);
   }
 };

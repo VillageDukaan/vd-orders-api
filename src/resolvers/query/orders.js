@@ -13,7 +13,8 @@ export const getOrders = async (parent, args, context) => {
       paymentId: order.payment_id
     }));
   } catch (error) {
-    const { rollbar } = context;
+    const { rollbar, logger } = context;
+    logger.error(error);
     Sentry.captureException(error);
     rollbar.error(error);
   }
