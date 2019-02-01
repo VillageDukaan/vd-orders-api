@@ -1,5 +1,11 @@
 import config from "config";
 import { Pool } from "pg";
+import * as Sentry from "@sentry/node";
+
+Sentry.init({
+  dsn: config.sentry.dsn,
+  environment: process.env.NODE_ENV
+});
 
 import { App } from "./app";
 

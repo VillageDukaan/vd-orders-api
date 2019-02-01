@@ -15,5 +15,8 @@
   },
   "postgresql": {
     "url": "DATABASE_URL"
+  },
+  "sentry": {
+    "dsn": "SENTRY_DNS"
   }
 }

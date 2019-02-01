@@ -40,7 +40,7 @@ export const App = opts => {
       const token = await getToken(req);
       if (isNil(token)) throw new AuthenticationError("You must be logged in");
 
-      return { config, database, user: token.user };
+      return { ...req.app.locals, user: token.user };
     }
   });
   server.applyMiddleware({ app, cors: isDevelopment });

@@ -1,3 +1,5 @@
+import * as Sentry from "@sentry/node";
+
 export const getOrders = async (parent, args, context) => {
   try {
     const { database } = context;
@@ -11,6 +13,6 @@ export const getOrders = async (parent, args, context) => {
       paymentId: order.payment_id
     }));
   } catch (error) {
-    return null;
+    Sentry.captureException(error);
   }
 };
