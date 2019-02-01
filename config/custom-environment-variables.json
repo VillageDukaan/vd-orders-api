@@ -17,7 +17,7 @@
     "url": "DATABASE_URL"
   },
   "sentry": {
-    "dsn": "SENTRY_DNS"
+    "dsn": "SENTRY_DSN"
   },
   "rollbar": {
     "accessToken": "ROLLBAR_ACCESS_TOKEN"
