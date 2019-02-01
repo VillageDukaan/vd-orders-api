@@ -20,7 +20,8 @@ import { logger } from "./helpers/logger";
 import { App } from "./app";
 
 const database = new Pool({
-  connectionString: config.postgresql.url
+  connectionString: config.postgresql.url,
+  ssl: config.postgresql.ssl
 });
 
 const app = App({ config, database, logger });

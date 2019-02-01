@@ -1,3 +1,6 @@
 {
-  "isDevelopment": false
+  "isDevelopment": false,
+  "postgresql": {
+    "ssl": true
+  }
 }
