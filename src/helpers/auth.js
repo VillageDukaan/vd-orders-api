@@ -3,23 +3,36 @@ import { isEmpty } from "lodash";
 export const checkAuth = async (req, res, next) => {
   try {
     const authorization = req.headers.authorization;
-    const { firebaseAdmin } = req.app.locals;
+    const { firebase } = req.app.locals;
     if (isEmpty(authorization)) res.sendStatus(401);
 
     const token = authorization.replace("Bearer ", "");
-    await firebaseAdmin.auth().verifyIdToken(token);
+    await firebase.auth().signInWithCustomToken(token);
     next();
   } catch (error) {
     res.sendStatus(401);
   }
 };
 
+export const getToken = async req => {
+  try {
+    const authorization = req.headers.authorization;
+    const { firebase } = req.app.locals;
+    const token = authorization.replace("Bearer ", "");
+    return await firebase.auth().signInWithCustomToken(token);
+  } catch (error) {
+    return null;
+  }
+};
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { firebase } = req.app.locals;
-    await firebase.auth().signInWithEmailAndPassword(email, password);
-    const token = await firebase.auth().currentUser.getIdToken(true);
+    const { firebase, firebaseAdmin } = req.app.locals;
+    const { user } = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+    const token = await firebaseAdmin.auth().createCustomToken(user.uid);
     res.json({ access_token: token });
   } catch (error) {
     res.sendStatus(400);

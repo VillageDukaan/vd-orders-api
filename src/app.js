@@ -1,11 +1,16 @@
 import express from "express";
-import { ApolloServer, makeExecutableSchema } from "apollo-server-express";
+import {
+  ApolloServer,
+  makeExecutableSchema,
+  AuthenticationError
+} from "apollo-server-express";
 import firebase from "firebase";
 import firebaseAdmin from "firebase-admin";
+import { isNil } from "lodash";
 
 import { typeDefs } from "./schema";
 import { Query } from "./resolvers/query";
-import { checkAuth, login, signup } from "./helpers/auth";
+import { login, signup, getToken } from "./helpers/auth";
 
 const schema = makeExecutableSchema({ typeDefs, resolvers: { Query } });
 
@@ -17,16 +22,26 @@ export const App = opts => {
   app.locals.config = config;
   app.locals.database = database;
   app.locals.firebase = firebase.initializeApp(config.firebase);
-  app.locals.firebaseAdmin = firebaseAdmin.initializeApp(config.firebase);
+  app.locals.firebaseAdmin = firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert({
+      projectId: config.firebaseAdmin.projectId,
+      privateKey: config.firebaseAdmin.privateKey.replace(/\\n/g, "\n"),
+      clientEmail: config.firebaseAdmin.clientEmail
+    })
+  });
 
   app.use(express.json());
-  app.use(/\/((?!login|signup).)*/, checkAuth);
 
   const server = new ApolloServer({
     schema,
     path: config.graphQl.path,
     playground: isDevelopment,
-    context: () => ({ config, database })
+    context: async ({ req }) => {
+      const token = await getToken(req);
+      if (isNil(token)) throw new AuthenticationError("You must be logged in");
+
+      return { config, database, user: token.user };
+    }
   });
   server.applyMiddleware({ app, cors: isDevelopment });
 
