@@ -1,17 +1,9 @@
-import express from "express";
-import {
-  ApolloServer,
-  makeExecutableSchema,
-  AuthenticationError
-} from "apollo-server-express";
-import firebase from "firebase";
-import firebaseAdmin from "firebase-admin";
-import { isNil } from "lodash";
-import morgan from "morgan";
+import express from 'express';
+import { ApolloServer, makeExecutableSchema } from 'apollo-server-express';
+import morgan from 'morgan';
 
-import { typeDefs } from "./schema";
-import { Query } from "./resolvers/query";
-import { login, signup, getToken } from "./helpers/auth";
+import { typeDefs } from './schema';
+import { Query } from './resolvers/query';
 
 const schema = makeExecutableSchema({ typeDefs, resolvers: { Query } });
 
@@ -23,16 +15,8 @@ export const App = opts => {
   app.locals.config = config;
   app.locals.database = database;
   app.locals.logger = logger;
-  app.locals.firebase = firebase.initializeApp(config.firebase);
-  app.locals.firebaseAdmin = firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert({
-      projectId: config.firebaseAdmin.projectId,
-      privateKey: config.firebaseAdmin.privateKey.replace(/\\n/g, "\n"),
-      clientEmail: config.firebaseAdmin.clientEmail
-    })
-  });
 
-  app.use(morgan("combined"));
+  app.use(morgan('combined'));
   app.use(express.json());
 
   const server = new ApolloServer({
@@ -40,17 +24,12 @@ export const App = opts => {
     path: config.graphQl.path,
     playground: false,
     context: async ({ req }) => {
-      const token = await getToken(req);
-      if (isNil(token)) throw new AuthenticationError("You must be logged in");
-
-      return { ...req.app.locals, user: token.user };
+      return { ...req.app.locals };
     }
   });
   server.applyMiddleware({ app, cors: isDevelopment });
 
-  app.get("/", (req, res) => res.sendStatus(200));
-  app.post("/login", login);
-  app.post("/signup", signup);
+  app.get('/', (req, res) => res.sendStatus(200));
 
   return app;
 };
